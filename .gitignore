@@ -1,0 +1,5 @@
+core/migrations/
+.env
+staticfiles
+db.sqlite3
+__pycache__

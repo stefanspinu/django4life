@@ -1,0 +1,11 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+  <div style="margin: 0px auto 198px auto; text-align: center; font-family: 'Roboto', serif; color: #242424;">
+    <h1 style="margin-bottom: 25px;">Добро пожаловать в комьюнити django4life!</h1>
+    <p>Вы будете получать от нас фишки, уроки и ответы на самые распространенные ошибки.</p>
+    <p>Вам здесь точно понравится!</p>
+    <h1 style="margin-top: 55px;"><a href="{% url 'home' %}" style="color: #03c4eb;">← Вернуться в блог</a></h1>
+  </div>
+{% endblock %}

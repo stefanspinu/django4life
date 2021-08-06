@@ -1,0 +1,94 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+<style>
+  .wrapper-item {
+  display: grid;
+  grid-template-areas: 'item sidebar';
+}
+
+@media (max-width: 920px) {
+    .wrapper-item {
+      grid-template-areas: 'item item'
+                         'sidebar sidebar';
+      
+    }
+
+    .content-item {
+      border-right: none;
+      padding: 0px 0px 0px 0px;
+    }
+
+    .sidebar-item {
+      padding: 60px 0px 0px 0px;
+    }
+
+    .sidebar-item .telegram-btn {
+      width: 100%;
+    }
+  }
+
+.content-item {
+  grid-area: item;
+}
+</style>
+
+{% block content %}
+  <div class="wrapper wrapper-item">
+    <div class="content content-item">
+      <div class="item">
+        <div class="item__header">
+          <div class="item__title">{{ article.title }}</div>
+          <div class="item__date"><b>Опубликовано</b> {{ article.date_published }}</div>
+        </div>
+        <div class="item__tags">
+          {% for tag in article.tags.all %}
+          <a href="{% url 'tag' tag %}">{{ tag }}</a> {% if forloop.counter != article.tags.all.count %} /{% endif %}
+          {% endfor %}
+        </div>
+        <div class="item__content" style="max-width: 800px;">
+          <div style="margin-left: -21px;">
+            {{ article.description | safe }}
+          </div>
+          
+        </div>
+        <div class="item__telegram telegram-item" id="telegram-item">
+          <div class="telegram-item__cross" id="telegram-item__cross">×</div>
+          <div class="telegram-item__body">
+            <div class="telegram-item__img">
+              <img src="{% static 'images/dj2.webp' %}" alt="django">
+            </div>
+            <div class="telegram-item__content">
+              <div class="telegram-item__h1">Хотите код из статьи или обсудить её</div>
+              <div class="telegram-item__text">Подписывайтесь на нас в Телеграм</div>
+              <a class="telegram-item__subscribe" href="" target="_blank">Подписаться</a>
+            </div>
+          </div>
+        </div>
+        <div class="item__pagination">
+          <div class="item__nav">Предыдущая СТАТЬЯ <br> <a href="{% url 'article' last_article %}">{{ last_article }}</a></div>
+          <div class="item__hr"></div>
+          <a href="{% url 'home' %}" class="item__back">← Вернуться в блог</a>
+        </div>
+      </div>
+    </div>
+    {% include 'core/sidebar-article.html' %}
+  </div>
+  <script>
+    function closeTelegramAdd() {
+    const telegramAdd = document.querySelector('#telegram-item')
+    const telegramAddClose = document.querySelector('#telegram-item__cross')
+  
+    telegramAddClose.addEventListener('click', async function() {
+      telegramAdd.style.opacity = 0
+      telegramAdd.style.visability = 0
+      telegramAdd.style.transition = 'all .9s ease'
+      await setTimeout(function(){
+        telegramAdd.style.display = 'none'
+      }, 1000)
+    })
+  }
+  closeTelegramAdd()
+  </script>
+{% endblock %}
+
